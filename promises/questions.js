@@ -201,4 +201,127 @@
 
 // ques 8: solve promise recursive
 
+function importantAction(username) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(`get the ${username}`);
+    }, 1000);
+  });
+}
 
+function likeTheVideo(video) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(video);
+    }, 1000);
+  });
+}
+
+// ye hai resursive promnise call
+// function promRecurse(func) {
+//   if (func.length === 0) return;
+
+//   let currPromise = func.shift();
+
+//   currPromise.then((res) => console.log(res)).catch((err) => console.log(err));
+
+//   promRecurse(func);
+// }
+
+// promRecurse([importantAction("Dheeraj"), likeTheVideo("video")]);
+
+// promise polyfill
+
+// function PromisePolyfill(executor) {
+//   let onResolve,
+//     onReject,
+//     isResolved = false,
+//     isRejected = false,
+//     value;
+
+//   function resolve(val) {
+//     isResolved = true;
+//     value = val;
+
+//     if (onResolve) {
+//       onResolve(val);
+//     }
+//   }
+
+//   function reject(val) {
+//     isRejected = true;
+//     value = val;
+
+//     if (onReject) {
+//       onReject(val);
+//     }
+//   }
+
+//   this.then = function (callback) {
+//     onResolve = callback;
+
+//     if (isResolved) {
+//       onResolve(value);
+//     }
+
+//     return this;
+//   };
+
+//   this.catch = function (callback) {
+//     onReject = callback;
+
+//     if (isRejected) {
+//       onReject(value);
+//     }
+
+//     return this;
+//   };
+
+//   executor(resolve, reject);
+// }
+
+// // use the polyfill
+
+// const example = new PromisePolyfill((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve(2);
+//   }, 1000);
+// });
+
+// example
+//   .then((res) => {
+//     console.log(res);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+// promise.all polyfill
+
+Promise.allPolyfill = (promises) => {
+  return new Promise((resolve, reject) => {
+    const result = [];
+
+    if (!promises.length) {
+      resolve(result);
+      return;
+    }
+
+    let pending = promises.length;
+
+    promises.forEach((promise, index) => {
+      Promise.resolve(promise).then((res) => {
+        result[index] = res;
+        pending--;
+
+        if (pending === 0) {
+          resolve(result);
+        }
+      }, reject);
+    });
+  });
+};
+
+Promise.allPolyfill([importantAction("Dheeraj"), likeTheVideo("video")])
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
