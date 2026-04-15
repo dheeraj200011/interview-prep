@@ -1,11 +1,9 @@
-import UseEffectHook from "./components/UseEffectHook.jsx";
-import UseStateHook from "./components/UseStateHook.jsx";
+import UseImperativeHandleHook from "./components/UseImperativeHandleHook.jsx";
 
 const App = () => {
   return (
     <div>
-      {/* <UseStateHook /> */}
-      <UseEffectHook />
+      <UseImperativeHandleHook />
     </div>
   );
 };

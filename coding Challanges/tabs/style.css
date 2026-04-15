@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.tab-btn {
+  margin: 1rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 20px;
+  border: 1px solid gray;
+  background-color: light-gray;
+}
+
+.btn:hover {
+  background-color: gray;
+  border: 1px solid gray;
+}
