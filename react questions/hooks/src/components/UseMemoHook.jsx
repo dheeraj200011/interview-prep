@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCallback } from "react";
 import { useMemo } from "react";
 
@@ -50,3 +50,39 @@ const UseMemoHook = () => {
 // garabage collection
 
 export default UseMemoHook;
+
+// useMemo Polyfill
+
+function areEqual(prevDeps, nextdeps) {
+  if (prevDeps === null) return false;
+  if (prevDeps.length !== nextdeps.length) return false;
+
+  for (let i = 0; i < prevDeps.length; i++) {
+    if (prevDeps[i] === nextdeps[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+const useMemoCustom = (cb, deps) => {
+  // cached value ko store karna hai
+  const memoizeRef = useRef(null);
+
+  if (!memoizeRef.current || !areEqual(memoizeRef.current.deps, deps)) {
+    memoizeRef.current = {
+      value: cb(),
+      deps,
+    };
+  }
+
+  // clean up logic
+  useEffect(() => {
+    return () => {
+      memoizeRef.current = null;
+    };
+  }, []);
+
+  return memoizeRef.current.value;
+};
