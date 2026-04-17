@@ -1,14 +1,16 @@
 import React from "react";
-import Counter from "./components/Counter";
-import Windowsize from "./components/Windowsize";
-import FetchApi from "./components/FetchApi";
+import LocalStorage from "./components/LocalStorage";
+import Observer from "./components/Observer";
 
 const App = () => {
   return (
     <div>
       {/* <Counter /> */}
       {/* <Windowsize /> */}
-      <FetchApi />
+      {/* <FetchApi /> */}
+      {/* <Debounce /> */}
+      {/* <LocalStorage /> */}
+      <Observer />
     </div>
   );
 };
